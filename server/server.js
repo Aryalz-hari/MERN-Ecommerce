@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 
+const authRouter= require('./routes/auth/auth-routes');
 
 mongoose
   .connect(
@@ -14,9 +15,11 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((error) => console.log(error));
 
+
+
   const PORT = process.env.PORT || 5000;
 app.use(cors({
-    origin:'http://localhost:5000',
+    origin:'http://localhost:5173',
     methods:['GET','POST','DELETE','PUT'],
     allowedHeaders:[
         "Content-Type",
@@ -28,7 +31,10 @@ app.use(cors({
     credentials: true
 }));
 
-  app.use(cookieParser);
+  app.use(cookieParser());
   app.use(express.json());
+  
+  app.use('/api/auth', authRouter);
 
   app.listen(PORT,()=>console.log("Server Running"));
+
