@@ -21,7 +21,10 @@ const AuthRegister = () => {
       if(data?.payload?.success){
         toast(data?.payload?.message);
         navigate("/auth/login");
-      } });
+      }
+    else {
+      toast.error(data?.payload?.message)
+    } });
   }
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
