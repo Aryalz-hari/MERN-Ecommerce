@@ -8,7 +8,6 @@ function AuthLayout(){
         >
           <div className="max-w-md space-y-6 text-center text-primary-foreground">
             <h1 className="text-4xl font-extrabold tracking-tight">
-              {" "}
               Welcome To Ecommerce
             </h1>
           </div>
