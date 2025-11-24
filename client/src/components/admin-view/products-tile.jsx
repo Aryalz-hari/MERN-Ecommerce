@@ -4,7 +4,10 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 
 
 
-function AdminProductsTile({product}){
+function AdminProductsTile({product,setFormData,
+           setOpenCreateProductsDialog,
+           setCurrentEditedID,
+          handleDelete}){
   
     return (
       <Card className="w-full max-w-sm mx-auto">
@@ -36,8 +39,13 @@ function AdminProductsTile({product}){
           </CardContent>
         </div>
         <CardFooter className="flex justify-between items-center">
-          <Button>Edit</Button>
-          <Button>Delete</Button>
+          <Button onClick={()=>{
+            setOpenCreateProductsDialog(true)
+            setCurrentEditedID(product._id)
+            setFormData(product)
+          }
+          }>Edit</Button>
+          <Button onClick={()=>{handleDelete(product?._id)}}>Delete</Button>
         </CardFooter>
       </Card>
     );
