@@ -4,7 +4,7 @@ const initialState={
     isLoading: false,
     productsList:[]
 }
-const addNewProduct= createAsyncThunk('/products/addnewproduct', async(formData)=>{
+export const addNewProduct= createAsyncThunk('/products/addnewproduct', async(formData)=>{
     const result = await axios.post("http://localhost:5000/api/admin/products/add", formData,{
         headers:{
             'Content-Type':'application/json'
@@ -12,7 +12,7 @@ const addNewProduct= createAsyncThunk('/products/addnewproduct', async(formData)
     });
     return result?.data;
 })
-const fecthAllProducts= createAsyncThunk(
+export const fetchAllProducts= createAsyncThunk(
   "/products/fetchAllProducts",
   async () => {
     const result = await axios.get(
@@ -21,7 +21,7 @@ const fecthAllProducts= createAsyncThunk(
     return result?.data;
   }
 );
-const editProduct= createAsyncThunk(
+export const editProduct= createAsyncThunk(
   "/products/editProduct",
   async ({id, formData}) => {
     const result = await axios.put(
@@ -36,7 +36,7 @@ const editProduct= createAsyncThunk(
     return result?.data;
   }
 );
-const deleteProduct = createAsyncThunk(
+export const deleteProduct = createAsyncThunk(
   "/products/deleteProduct",
   async (id) => {
     const result = await axios.delete(
@@ -52,14 +52,15 @@ const AdminProductSlice= createSlice({
     initialState,
     reducers:{},
     extraReducers:(builder)=>{
-        builder.addCase(fecthAllProducts.pending,(state)=>{
+        builder.addCase(fetchAllProducts.pending,(state)=>{
             state.isLoading= true;
-        }).addCase(fecthAllProducts.fulfilled, (state, action)=>{
+        }).addCase(fetchAllProducts.fulfilled, (state, action)=>{
+          console.log(action.payload.data, 'data');
             state.isLoading= false;
-            state.productsList= action.payload;
-        }).addCase(fecthAllProducts.rejected,(state)=>{
+            state.productList= action.payload.data;
+        }).addCase(fetchAllProducts.rejected,(state)=>{
             state.isLoading= false;
-            state.productsList=[];
+            state.productList=[];
         })
     }
 });
