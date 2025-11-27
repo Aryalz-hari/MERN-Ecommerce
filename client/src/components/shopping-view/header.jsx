@@ -15,7 +15,7 @@ import { logoutUser } from '@/store/auth-slice'
 
 function MenuItems() {
   return (
-    <nav className="flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row">
+    <nav className="flex flex-col ml-2 mb-3 lg:mb-0 text-xl lg:items-center gap-6 lg:flex-row">
       {shoppingViewHeaderMenuItems.map((menuItem) => (
         <Link key={menuItem.id} to={menuItem.path}>
           {menuItem.label}
@@ -36,12 +36,12 @@ function HeaderRightContent(){
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-4">
       <Button variant="outline" size="icon">
-        <ShoppingCart className="w-6 h-6" />
+        <ShoppingCart className="w-6 h-6 ml-2" />
         <span className="sr-only">UserCart</span>
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar className="bg-black">
+          <Avatar className="bg-black ml-2 cursor-pointer">
             <AvatarFallback className="bg-black text-white font-extrabold">
               {user?.userName[0].toUpperCase()}
             </AvatarFallback>
@@ -56,7 +56,7 @@ function HeaderRightContent(){
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleLogout}>
-            <LogOut className="mr-2 h-4 w-4" />
+            <LogOut className="mr-2 h-4 w-4 " />
             Logout
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -73,7 +73,7 @@ const ShoppingHeader = () => {
       <div className="flex items-center justify-between px-4 md:px-6">
         <Link className="flex h-16 items-center gap-2" to="/shop/home">
           <HousePlug className="h-6 w-6" />
-          <span className="font-bold">Ecommerce</span>
+          <span className="font-bold text-2xl">Ecommerce</span>
         </Link>
         <Sheet>
           <SheetTrigger asChild>
