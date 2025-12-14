@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import AuthLayout from "./components/auth/layout";
 import Authregister  from "./pages/auth/register";
 import AuthLogin  from "./pages/auth/login";
@@ -29,6 +29,7 @@ if(isLoading) return <Skeleton className="h-[600px] w-[600px] rounded-full" />;
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
+        <Route path="/" element={<Navigate to="/auth/login" replace />} />
         <Route
           path="/auth"
           element={
@@ -66,7 +67,7 @@ if(isLoading) return <Skeleton className="h-[600px] w-[600px] rounded-full" />;
           <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="account" element={<ShoppingAccount />} />
         </Route>
-        <Route path="unauth" element={<UnAuth/>}></Route>
+        <Route path="unauth" element={<UnAuth />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </div>

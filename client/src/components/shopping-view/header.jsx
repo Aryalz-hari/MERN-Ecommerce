@@ -14,14 +14,29 @@ import { Avatar, AvatarFallback } from '../ui/avatar'
 import { logoutUser } from '@/store/auth-slice'
 import UserCartWrapper from './cart-wrapper'
 import { fetchCartItems } from '@/store/shop/cart-slice'
+import { Label } from '../ui/label'
 
 function MenuItems() {
+  const navigate = useNavigate()
+
+  function handleNavigate(getCurrentMenuItem){
+    sessionStorage.removeItem('filters');
+    const currentFilter= getCurrentMenuItem.id!=='home'?{
+      category:[getCurrentMenuItem.id]
+    }:null
+    sessionStorage.setItem('filters',JSON.stringify(currentFilter));
+    navigate(getCurrentMenuItem.path)
+  }
   return (
     <nav className="flex flex-col ml-2 mb-3 lg:mb-0 text-xl lg:items-center gap-6 lg:flex-row">
       {shoppingViewHeaderMenuItems.map((menuItem) => (
-        <Link key={menuItem.id} to={menuItem.path}>
+         <Label
+          onClick={() => handleNavigate(menuItem)}
+          className="text-md font-medium cursor-pointer"
+          key={menuItem.id}
+        >
           {menuItem.label}
-        </Link>
+        </Label>
       ))}
     </nav>
   );

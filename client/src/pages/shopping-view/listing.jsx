@@ -15,6 +15,7 @@ import ProductDetailsDialog from '@/components/shopping-view/product-details';
 import { useSearchParams } from 'react-router-dom';
 import { addToCart, fetchCartItems } from '@/store/shop/cart-slice';
 import { toast } from 'sonner';
+import { useLocation } from 'react-router-dom';
 function createSearchParamsHelper(filterParams){
 const queryParams=[];
 for (const [key, value] of Object.entries(filterParams)) {
@@ -31,6 +32,7 @@ return queryParams.join("&");
 };
 
 function ShopListing () {
+  const location = useLocation();
   const dispatch= useDispatch();
   const{user}= useSelector((state)=>state.auth)
   const { productList,productDetails} = useSelector(
@@ -76,6 +78,17 @@ if (data?.payload?.success) {
 }}
 );
 }
+useEffect(() => {
+  const storedFilters = sessionStorage.getItem("filters");
+  const parsedFilters = storedFilters ? JSON.parse(storedFilters) : {};
+
+  dispatch(
+    fetchAllFilteredProducts({
+      filterParams: parsedFilters,
+      sortParams: null,
+    })
+  );
+}, [dispatch, location.key]);
 
 useEffect(()=>{
 setSort('price-lowtohigh');
