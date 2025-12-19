@@ -8,16 +8,25 @@ function AddressCard({
   handleEditAddress,
 }) {
   return (
-    <Card
-    >
-      <CardContent className="grid p-4 gap-4">
-        <Label>Address: {addressInfo?.address}</Label>
-        <Label>City: {addressInfo?.city}</Label>
-        <Label>pincode: {addressInfo?.pincode}</Label>
-        <Label>Phone: {addressInfo?.phone}</Label>
-        <Label>Notes: {addressInfo?.notes}</Label>
+    <Card>
+      <CardContent className="grid p-4 gap-4 ">
+        <Label className="text-sm md:text-base">
+          Address: {addressInfo?.address}
+        </Label>
+        <Label className="text-sm md:text-base">
+          City: {addressInfo?.city}
+        </Label>
+        <Label className="text-sm md:text-base">
+          pincode: {addressInfo?.pincode}
+        </Label>
+        <Label className="text-sm md:text-base">
+          Phone: {addressInfo?.phone}
+        </Label>
+        <Label className="text-sm md:text-base">
+          Notes: {addressInfo?.notes}
+        </Label>
       </CardContent>
-      <CardFooter className="p-3 flex justify-between">
+      <CardFooter className="p-3 flex justify-between ">
         <Button onClick={() => handleEditAddress(addressInfo)}>Edit</Button>
         <Button onClick={() => handleDeleteAddress(addressInfo)}>Delete</Button>
       </CardFooter>

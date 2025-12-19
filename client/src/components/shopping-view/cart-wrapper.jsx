@@ -33,7 +33,7 @@ return (
         <span className="font-bold">{totalCartAmount}</span>
       </div>
     </div>
-    <Button onClick={()=>navigate('/shop/checkout')} className="w-full mt-6"> Checkout</Button>
+    <Button  className="w-full mt-6"> Checkout</Button>
   </SheetContent>
 );
 }
