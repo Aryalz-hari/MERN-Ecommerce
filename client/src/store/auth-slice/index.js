@@ -7,9 +7,10 @@ const initialState= {
     isLoading: true,
     user:null
 }
+const url="https://ecommerce-im7c.onrender.com"
 export const registerUser= createAsyncThunk('/auth/register',
     async(formData)=>{
-        const response= await axios.post('http://localhost:5000/api/auth/register', formData,{
+        const response= await axios.post(url+'/api/auth/register', formData,{
             withCredentials:true
         });
         return response.data;
@@ -17,7 +18,7 @@ export const registerUser= createAsyncThunk('/auth/register',
 )
 export const loginUser= createAsyncThunk('/auth/login',
     async(formData)=>{
-        const response= await axios.post('http://localhost:5000/api/auth/login', formData,{
+        const response= await axios.post(url+'/api/auth/login', formData,{
             withCredentials:true
         });
         return response.data;
@@ -28,7 +29,7 @@ export const logoutUser = createAsyncThunk(
 
   async () => {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/logout",
+      url+"/api/auth/logout",
       {},
       {
         withCredentials: true,
@@ -42,7 +43,7 @@ export const logoutUser = createAsyncThunk(
 export const checkAuth = createAsyncThunk(
   "/auth/checkAuth",
   async () => {
-    const response = await axios.get("http://localhost:5000/api/auth/check-auth", {
+    const response = await axios.get(url+"/api/auth/check-auth", {
         withCredentials: true,
         headers: {
           "Cache-control":
