@@ -7,7 +7,7 @@ const initialState= {
     isLoading: true,
     user:null
 }
-const url="https://ecommerce-im7c.onrender.com"
+const url="https://frontend-ymwa.onrender.com"
 export const registerUser= createAsyncThunk('/auth/register',
     async(formData)=>{
         const response= await axios.post(url+'/api/auth/register', formData,{
