@@ -6,7 +6,7 @@ const initialState = {
   addressList: [],
 };   
 
-const url = "https://frontend-ymwa.onrender.com";
+const url = "http://localhost:5000";
 export const addNewAddress = createAsyncThunk(
   "/addresses/addNewAddress",
   async (formData) => {

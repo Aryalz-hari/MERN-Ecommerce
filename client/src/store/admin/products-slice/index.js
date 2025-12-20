@@ -4,7 +4,7 @@ const initialState={
     isLoading: false,
     productsList:[]
 }
-const url="https://frontend-ymwa.onrender.com"
+const url = "http://localhost:5000";
 export const addNewProduct= createAsyncThunk('/products/addnewproduct', async(formData)=>{
     const result = await axios.post(url+"/api/admin/products/add", formData,{
         headers:{

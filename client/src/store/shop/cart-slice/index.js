@@ -5,7 +5,7 @@ const initialState = {
   cartItems: [],
   isLoading: false,
 };
-const url = "https://frontend-ymwa.onrender.com";
+const url = "http://localhost:5000";
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async ({ userId, productId, quantity }) => {

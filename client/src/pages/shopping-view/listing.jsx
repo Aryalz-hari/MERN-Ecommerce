@@ -165,7 +165,7 @@ if(productDetails!==null)
                   handleAddtoCart={handleAddtoCart}
                 />
               ))
-            : null}
+            : <p>No products found</p>}
         </div>
       </div>
       <ProductDetailsDialog open={openDetailsDialog} setOpen={setOpenDetailsDialog} productDetails={productDetails}/>
