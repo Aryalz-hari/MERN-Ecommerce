@@ -8,7 +8,7 @@ const initialState = {
   orderList: [],
   orderDetails: null,
 };
-const url ="https://ecommerce-im7c.onrender.com";
+const url ="https://frontend-ymwa.onrender.com";
 export const createNewOrder = createAsyncThunk(
   "/order/createNewOrder",
   async (orderData) => {
