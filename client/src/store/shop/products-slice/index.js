@@ -6,7 +6,7 @@ const initialState= {
     productList:[],
     productDetails:null,
 }
-const url="https://ecommerce-im7c.onrender.com"
+const url = "https://ecommerce-im7c.onrender.com";
  export const fetchAllFilteredProducts= createAsyncThunk('/products/fetchAllFilteredProducts', 
     async({filterParams,sortParams})=>{
         const query = new URLSearchParams({

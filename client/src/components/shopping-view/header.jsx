@@ -67,6 +67,7 @@ function HeaderRightContent(){
           <ShoppingCart className=" w-6 h-6 ml-2" />
           <span className="sr-only">UserCart</span>
           <UserCartWrapper
+          setOpenCartSheet={setOpenCartSheet}
             cartItems={
               cartItems && cartItems.items && cartItems.items.length > 0? cartItems.items: []
             }

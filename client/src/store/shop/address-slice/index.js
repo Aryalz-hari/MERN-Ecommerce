@@ -4,8 +4,9 @@ import axios from "axios";
 const initialState = {
   isLoading: false,
   addressList: [],
-};
-const url="https://ecommerce-im7c.onrender.com"
+};   
+
+const url = "https://ecommerce-im7c.onrender.com";
 export const addNewAddress = createAsyncThunk(
   "/addresses/addNewAddress",
   async (formData) => {

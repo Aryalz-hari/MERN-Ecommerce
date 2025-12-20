@@ -5,7 +5,7 @@ const initialState = {
   cartItems: [],
   isLoading: false,
 };
-const url="https://ecommerce-im7c.onrender.com"
+const url = "https://ecommerce-im7c.onrender.com";
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async ({ userId, productId, quantity }) => {

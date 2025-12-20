@@ -6,9 +6,16 @@ function AddressCard({
   addressInfo,
   handleDeleteAddress,
   handleEditAddress,
+  setCurrentSelectedAddress,
 }) {
   return (
-    <Card>
+    <Card
+      onClick={
+        setCurrentSelectedAddress
+          ? () => setCurrentSelectedAddress(addressInfo)
+          : null
+      }
+    >
       <CardContent className="grid p-4 gap-4 ">
         <Label className="text-sm md:text-base">
           Address: {addressInfo?.address}
