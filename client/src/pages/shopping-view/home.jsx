@@ -90,7 +90,14 @@ if(productDetails!==null) setOpenDetailsDialog(true)
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="relative w-full h-[800px] overflow-hidden">
+      <div
+        className="relative w-full h-[220px] 
+      sm:h-[320px] 
+      md:h-[450px] 
+      lg:h-[600px] 
+      xl:h-[800px]
+      overflow-hidden"
+      >
         {slides.map((slide, index) => (
           <img
             src={slide}
