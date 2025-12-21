@@ -5,13 +5,15 @@ const {
   getAllOrdersByUser,
   getOrderDetails,
   capturePayment,
+  verifyKhaltiPayment,
 } = require("../../controllers/shop/order-controller");
 
 const router = express.Router();
 
 router.post("/create", createOrder);
-router.post("/capture", capturePayment);
+router.post("/paypal/capture", capturePayment); //paypal
 router.get("/list/:userId", getAllOrdersByUser);
 router.get("/details/:id", getOrderDetails);
+router.post("/khalti/verify", verifyKhaltiPayment); //khalti
 
 module.exports = router;
