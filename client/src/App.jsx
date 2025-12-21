@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import AuthLayout from "./components/auth/layout";
-import Authregister  from "./pages/auth/register";
-import AuthLogin  from "./pages/auth/login";
+import Authregister from "./pages/auth/register";
+import AuthLogin from "./pages/auth/login";
 import AdminLayout from "./components/admin-view/layout";
 import AdminDashboard from "./pages/admin-view/dashboard";
 import AdminProducts from "./pages/admin-view/products";
@@ -21,13 +21,17 @@ import { useEffect } from "react";
 import { Skeleton } from "./components/ui/skeleton";
 import PaypalReturnPage from "./pages/shopping-view/paypal-return";
 import PaymentSuccessPage from "./pages/shopping-view/payment-success";
+import KhaltiSuccess from "./pages/shopping-view/khalti-success";
 function App() {
- const {user, isAuthenticated, isLoading}= useSelector((state)=>state.auth);
-const dispatch= useDispatch();
-useEffect(()=>{
-  dispatch(checkAuth())
-},[dispatch])
-if(isLoading) return <Skeleton className="h-[600px] w-[600px] rounded-full" />;
+  const { user, isAuthenticated, isLoading } = useSelector(
+    (state) => state.auth
+  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+  if (isLoading)
+    return <Skeleton className="h-[600px] w-[600px] rounded-full" />;
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
@@ -70,6 +74,7 @@ if(isLoading) return <Skeleton className="h-[600px] w-[600px] rounded-full" />;
           <Route path="account" element={<ShoppingAccount />} />
           <Route path="paypal-return" element={<PaypalReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
+          <Route path="khalti-success" element={<KhaltiSuccess />} />
         </Route>
         <Route path="unauth" element={<UnAuth />}></Route>
         <Route path="*" element={<NotFound />}></Route>

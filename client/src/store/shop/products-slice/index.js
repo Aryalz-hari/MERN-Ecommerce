@@ -6,7 +6,7 @@ const initialState = {
   productList: [],
   productDetails: null,
 };
-const url = import.meta.VITE_API_URL || "http://143.244.128.203:8000";
+const url = import.meta.env.VITE_API_URL || "http://143.244.128.203:8000";
 export const fetchAllFilteredProducts = createAsyncThunk(
   "/products/fetchAllFilteredProducts",
   async ({ filterParams, sortParams }) => {

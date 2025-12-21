@@ -7,8 +7,9 @@ const initialState = {
   orderId: null,
   orderList: [],
   orderDetails: null,
+  paymentURL: null,
 };
-const url = import.meta.VITE_API_URL || "http://143.244.128.203:8000";
+const url = import.meta.env.VITE_API_URL || "http://143.244.128.203:8000";
 export const createNewOrder = createAsyncThunk(
   "/order/createNewOrder",
   async (orderData) => {
@@ -21,10 +22,30 @@ export const createNewOrder = createAsyncThunk(
   }
 );
 
+//khalti
+export const verifyKhaltiPayment = createAsyncThunk(
+  "/order/verifyKhaltiPayment",
+  async ({ pidx, orderId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(url + "/api/shop/order/khalti/verify", {
+        pidx,
+        orderId,
+      });
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "Khalti payment verification failed"
+      );
+    }
+  }
+);
+
+//paypal
 export const capturePayment = createAsyncThunk(
   "/order/capturePayment",
   async ({ paymentId, payerId, orderId }) => {
-    const response = await axios.post(url + "/api/shop/order/capture", {
+    const response = await axios.post(url + "/api/shop/order/paypal/capture", {
       paymentId,
       payerId,
       orderId,
@@ -33,7 +54,6 @@ export const capturePayment = createAsyncThunk(
     return response.data;
   }
 );
-
 export const getAllOrdersByUserId = createAsyncThunk(
   "/order/getAllOrdersByUserId",
   async (userId) => {
@@ -68,6 +88,7 @@ const shoppingOrderSlice = createSlice({
       .addCase(createNewOrder.fulfilled, (state, action) => {
         state.isLoading = false;
         state.approvalURL = action.payload.approvalURL;
+        state.paymentURL = action.payload.paymentURL;
         state.orderId = action.payload.orderId;
         sessionStorage.setItem(
           "currentOrderId",
@@ -100,6 +121,18 @@ const shoppingOrderSlice = createSlice({
       .addCase(getOrderDetails.rejected, (state) => {
         state.isLoading = false;
         state.orderDetails = null;
+      })
+      .addCase(verifyKhaltiPayment.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(verifyKhaltiPayment.fulfilled, (state, action) => {
+        state.loading = false;
+        state.order = action.payload.data;
+        state.success = true;
+      })
+      .addCase(verifyKhaltiPayment.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });

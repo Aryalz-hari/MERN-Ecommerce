@@ -5,6 +5,7 @@
 staticfiles
 mediafiles
 client/node_modules
+server/node_modules
 
 
 # Byte-compiled / optimized / DLL files

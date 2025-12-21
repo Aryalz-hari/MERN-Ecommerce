@@ -12,10 +12,10 @@ function ShoppingCheckout() {
   const { cartItems } = useSelector((state) => state.shopCart);
   const { user } = useSelector((state) => state.auth);
   const { approvalURL } = useSelector((state) => state.shopOrder);
-  const {isPaymentStart,setIsPaymemntStart}= useState(false);
+  const { paymentURL } = useSelector((state) => state.shopOrder);
+  const { isPaymentStart, setIsPaymemntStart } = useState(false);
   const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
   const dispatch = useDispatch();
-  
 
   console.log(currentSelectedAddress, "cartItems");
 
@@ -34,7 +34,7 @@ function ShoppingCheckout() {
 
   function handleInitiatePaypalPayment() {
     if (cartItems.length === 0) {
-      toast( "Your cart is empty. Please add items to proceed");
+      toast("Your cart is empty. Please add items to proceed");
 
       return;
     }
@@ -84,9 +84,67 @@ function ShoppingCheckout() {
       }
     });
   }
+  function handleInitiateKhaltiPayment() {
+    if (cartItems.length === 0) {
+      toast("Your cart is empty. Please add items to proceed");
+
+      return;
+    }
+    if (currentSelectedAddress === null) {
+      toast("Please select one address to proceed.");
+
+      return;
+    }
+
+    const orderData = {
+      userId: user?.id,
+      cartId: cartItems?._id,
+      cartItems: cartItems.items.map((singleCartItem) => ({
+        productId: singleCartItem?.productId,
+        title: singleCartItem?.title,
+        image: singleCartItem?.image,
+        price:
+          singleCartItem?.salePrice > 0
+            ? singleCartItem?.salePrice
+            : singleCartItem?.price,
+        quantity: singleCartItem?.quantity,
+      })),
+      addressInfo: {
+        addressId: currentSelectedAddress?._id,
+        address: currentSelectedAddress?.address,
+        city: currentSelectedAddress?.city,
+        pincode: currentSelectedAddress?.pincode,
+        phone: currentSelectedAddress?.phone,
+        notes: currentSelectedAddress?.notes,
+      },
+      orderStatus: "pending",
+      paymentMethod: "khalti",
+      paymentStatus: "pending",
+      totalAmount: totalCartAmount,
+      orderDate: new Date(),
+      orderUpdateDate: new Date(),
+      paymentId: "",
+      payerId: "",
+    };
+
+    const orderRes = dispatch(createNewOrder(orderData)).then((data) => {
+      console.log(data, "john");
+      if (data?.payload?.success) {
+        setIsPaymemntStart(true);
+      } else {
+        setIsPaymemntStart(false);
+      }
+    });
+    // SAVE ORDER ID TO LOCALSTORAGE HERE!
+    localStorage.setItem("orderId", orderResponse.id);
+  }
 
   if (approvalURL) {
     window.location.href = approvalURL;
+  }
+
+  if (paymentURL) {
+    window.location.href = paymentURL;
   }
 
   return (
@@ -111,9 +169,12 @@ function ShoppingCheckout() {
               <span className="font-bold">${totalCartAmount}</span>
             </div>
           </div>
-          <div className="mt-4 w-full">
-            <Button onClick={handleInitiatePaypalPayment} className="w-full">
+          <div className="mt-4 flex justify-between gap-3">
+            <Button onClick={handleInitiatePaypalPayment}>
               Checkout With Paypal
+            </Button>
+            <Button onClick={handleInitiateKhaltiPayment}>
+              Checkout With Khalti
             </Button>
           </div>
         </div>
