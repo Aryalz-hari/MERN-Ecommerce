@@ -32,14 +32,14 @@ function ShoppingCheckout() {
         )
       : 0;
 
-  function handleInitiatePaypalPayment() {
-    if (cartItems.length === 0) {
-      toast( "Your cart is empty. Please add items to proceed");
+  function handleInitiateKhaltiPayment() {
+    if (cartItems.items.length === 0) {
+      toast.error( "Your cart is empty. Please add items to proceed");
 
       return;
     }
     if (currentSelectedAddress === null) {
-      toast("Please select one address to proceed.");
+      toast.error("Please select one address to proceed.");
 
       return;
     }
@@ -66,7 +66,7 @@ function ShoppingCheckout() {
         notes: currentSelectedAddress?.notes,
       },
       orderStatus: "pending",
-      paymentMethod: "paypal",
+      paymentMethod: "khalti",
       paymentStatus: "pending",
       totalAmount: totalCartAmount,
       orderDate: new Date(),
@@ -112,8 +112,8 @@ function ShoppingCheckout() {
             </div>
           </div>
           <div className="mt-4 w-full">
-            <Button onClick={handleInitiatePaypalPayment} className="w-full">
-              Checkout With Paypal
+            <Button onClick={handleInitiateKhaltiPayment} className="w-full cursor-pointer">
+              Checkout With Khalti
             </Button>
           </div>
         </div>

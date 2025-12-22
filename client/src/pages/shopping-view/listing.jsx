@@ -80,7 +80,7 @@ if (data?.payload?.success) {
 useEffect(() => {
   const storedFilters = sessionStorage.getItem("filters");
   const parsedFilters = storedFilters ? JSON.parse(storedFilters) : {};
-
+setFilters(parsedFilters);
   dispatch(
     fetchAllFilteredProducts({
       filterParams: parsedFilters,
@@ -89,10 +89,10 @@ useEffect(() => {
   );
 }, [dispatch, location.key]);
 
-useEffect(()=>{
-setSort('price-lowtohigh');
-setFilters(JSON.parse(sessionStorage.getItem('filters'))||{})
-},[])
+useEffect(() => {
+  setSort("price-lowtohigh");
+  setFilters(JSON.parse(sessionStorage.getItem("filters")) || {});
+}, []);
 
   useEffect(() => {
     if (filters && Object.keys(filters).length > 0) {

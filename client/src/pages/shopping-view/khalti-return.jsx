@@ -4,33 +4,34 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-function PaypalReturnPage() {
+function KhaltiReturnPage() {
   const dispatch = useDispatch();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const paymentId = params.get("paymentId");
-  const payerId = params.get("PayerID");
+  const pidx = params.get("pidx"); // Khalti payment ID
 
   useEffect(() => {
-    if (paymentId && payerId) {
+    if (pidx) {
       const orderId = JSON.parse(sessionStorage.getItem("currentOrderId"));
 
-      dispatch(capturePayment({ paymentId, payerId, orderId })).then((data) => {
+      dispatch(capturePayment({ paymentId: pidx, orderId })).then((data) => {
         if (data?.payload?.success) {
           sessionStorage.removeItem("currentOrderId");
           window.location.href = "/shop/payment-success";
+        } else {
+          window.location.href = "/shop/payment-failure";
         }
       });
     }
-  }, [paymentId, payerId, dispatch]);
+  }, [pidx, dispatch]);
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Processing Payment...Please wait!</CardTitle>
+        <CardTitle>Processing Payment... Please wait!</CardTitle>
       </CardHeader>
     </Card>
   );
 }
 
-export default PaypalReturnPage;
+export default KhaltiReturnPage;

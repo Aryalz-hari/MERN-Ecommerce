@@ -114,6 +114,7 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
                 addressInfo={singleAddressItem}
                 handleEditAddress={handleEditAddress}
                 setCurrentSelectedAddress={setCurrentSelectedAddress}
+                selectedId={selectedId}
               />
             ))
           : null}

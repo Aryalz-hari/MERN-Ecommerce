@@ -23,10 +23,9 @@ export const createNewOrder = createAsyncThunk(
 
 export const capturePayment = createAsyncThunk(
   "/order/capturePayment",
-  async ({ paymentId, payerId, orderId }) => {
+  async ({ paymentId, orderId }) => {
     const response = await axios.post(url + "/api/shop/order/capture", {
       paymentId,
-      payerId,
       orderId,
     });
 

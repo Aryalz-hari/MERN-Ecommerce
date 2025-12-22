@@ -19,8 +19,8 @@ import UnAuth from "./pages/unAuthpage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Skeleton } from "./components/ui/skeleton";
-import PaypalReturnPage from "./pages/shopping-view/paypal-return";
-import PaymentSuccessPage from "./pages/shopping-view/payment-success";
+import KhaltiReturnPage from "./pages/shopping-view/khalti-return";
+import PaymentSuccessPage from "./pages/shopping-view/khalti-success";
 function App() {
  const {user, isAuthenticated, isLoading}= useSelector((state)=>state.auth);
 const dispatch= useDispatch();
@@ -68,7 +68,7 @@ if(isLoading) return <Skeleton className="h-[600px] w-[600px] rounded-full" />;
           <Route path="listing" element={<ShoppingListing />} />
           <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="account" element={<ShoppingAccount />} />
-          <Route path="paypal-return" element={<PaypalReturnPage />} />
+          <Route path="khalti-return" element={<KhaltiReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
         </Route>
         <Route path="unauth" element={<UnAuth />}></Route>
