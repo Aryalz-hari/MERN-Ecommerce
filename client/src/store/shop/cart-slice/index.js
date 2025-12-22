@@ -5,7 +5,7 @@ const initialState = {
   cartItems: [],
   isLoading: false,
 };
-const url = import.meta.VITE_API_URL || "http://143.244.128.203:8000";
+const url = import.meta.env.VITE_API_URL || "http://143.244.128.203:8000";
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async ({ userId, productId, quantity }) => {

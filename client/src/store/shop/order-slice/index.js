@@ -8,7 +8,7 @@ const initialState = {
   orderList: [],
   orderDetails: null,
 };
-const url = import.meta.VITE_API_URL || "http://143.244.128.203:8000";
+const url = import.meta.env.VITE_API_URL || "http://143.244.128.203:8000";
 export const createNewOrder = createAsyncThunk(
   "/order/createNewOrder",
   async (orderData) => {
