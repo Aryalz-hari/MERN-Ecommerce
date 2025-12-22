@@ -13,7 +13,7 @@ function ShoppingCheckout() {
   const { user } = useSelector((state) => state.auth);
   const { approvalURL } = useSelector((state) => state.shopOrder);
   const { paymentURL } = useSelector((state) => state.shopOrder);
-  const { isPaymentStart, setIsPaymemntStart } = useState(false);
+  const [isPaymentStart, setIsPaymemntStart] = useState(false);
   const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
   const dispatch = useDispatch();
 
@@ -76,7 +76,6 @@ function ShoppingCheckout() {
     };
 
     dispatch(createNewOrder(orderData)).then((data) => {
-      console.log(data, "john");
       if (data?.payload?.success) {
         setIsPaymemntStart(true);
       } else {
@@ -127,16 +126,15 @@ function ShoppingCheckout() {
       payerId: "",
     };
 
-    const orderRes = dispatch(createNewOrder(orderData)).then((data) => {
-      console.log(data, "john");
+    dispatch(createNewOrder(orderData)).then((data) => {
       if (data?.payload?.success) {
         setIsPaymemntStart(true);
+        const orderId = data.payload.orderId;
+        localStorage.setItem("orderId", orderId);
       } else {
         setIsPaymemntStart(false);
       }
     });
-    // SAVE ORDER ID TO LOCALSTORAGE HERE!
-    localStorage.setItem("orderId", orderResponse.id);
   }
 
   if (approvalURL) {

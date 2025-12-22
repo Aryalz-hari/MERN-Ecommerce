@@ -98,6 +98,7 @@ const shoppingOrderSlice = createSlice({
       .addCase(createNewOrder.rejected, (state) => {
         state.isLoading = false;
         state.approvalURL = null;
+        state.paymentURL = null;
         state.orderId = null;
       })
       .addCase(getAllOrdersByUserId.pending, (state) => {

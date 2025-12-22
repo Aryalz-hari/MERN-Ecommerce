@@ -11,7 +11,7 @@ const KhaltiSuccess = () => {
   const { loading, success, error } = useSelector((state) => state.shopOrder);
 
   const pidx = searchParams.get("pidx");
-  const orderId = localStorage.getItem("orderId"); // saved during createOrder
+  const orderId = JSON.parse(sessionStorage.getItem("currentOrderId"));
 
   useEffect(() => {
     if (!pidx || !orderId) return;
@@ -19,8 +19,11 @@ const KhaltiSuccess = () => {
     dispatch(verifyKhaltiPayment({ pidx, orderId }))
       .unwrap()
       .then(() => {
-        localStorage.removeItem("orderId");
-        navigate("/shop/payment-success");
+        sessionStorage.removeItem("currentOrderId");
+
+        navigate("/shop/payment-success", {
+          state: { fromPaymentGate: true },
+        });
       });
   }, [dispatch, pidx, orderId, navigate]);
 
