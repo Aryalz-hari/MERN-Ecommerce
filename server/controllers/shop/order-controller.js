@@ -1,4 +1,4 @@
-const khalti= require("../../helpers/khalti");
+const khalti = require("../../helpers/khalti");
 const Order = require("../../models/order");
 const Cart = require("../../models/Cart");
 const Product = require("../../models/Products");
@@ -20,8 +20,8 @@ const createOrder = async (req, res) => {
     } = req.body;
 
     const response = await khalti.post("/epayment/initiate/", {
-      return_url: "http://localhost:5173/shop/khalti-return",
-      website_url: "http://localhost:5173",
+      return_url: process.env.KHALTI_RETURN_URL,
+      website_url: process.env.WEBSITE_URL,
       amount: totalAmount * 100, // paisa
       purchase_order_id: `ORDER_${Date.now()}`,
       purchase_order_name: "Ecommerce Order",
