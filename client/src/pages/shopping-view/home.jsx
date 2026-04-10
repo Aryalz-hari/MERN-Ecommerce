@@ -112,7 +112,7 @@ if(productDetails!==null) setOpenDetailsDialog(true)
           size="icon"
           onClick={() =>
             setCurrentSlide(
-              (prevSlide) => (prevSlide - 1 + slides.length) % slides.length
+              (prevSlide) => (prevSlide - 1 + slides.length) % slides.length,
             )
           }
           className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/80"
@@ -179,6 +179,7 @@ if(productDetails!==null) setOpenDetailsDialog(true)
             {productList && productList.length > 0
               ? productList.map((productItem) => (
                   <ShoppingProductTile
+                  
                     product={productItem}
                     handleGetProductDetails={handleGetProductDetails}
                     handleAddtoCart={handleAddtoCart}
