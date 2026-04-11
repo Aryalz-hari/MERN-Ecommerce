@@ -102,12 +102,19 @@ function ShopListing() {
     setFilters(JSON.parse(sessionStorage.getItem("filters")) || {});
   }, []);
 
-  useEffect(() => {
-    if (filters && Object.keys(filters).length > 0) {
-      const createQueryString = createSearchParamsHelper(filters);
-      setSearchParams(new URLSearchParams(createQueryString));
+    if (indexOfCurrentSection === -1) {
+      cpyFilters = {
+        ...cpyFilters,
+        [getSectionId]: [getCurrentOption],
+      };
+    } else {
+      const indexOfCurrentOption =
+        cpyFilters[getSectionId].indexOf(getCurrentOption);
+
+      if (indexOfCurrentOption === -1)
+        cpyFilters[getSectionId].push(getCurrentOption);
+      else cpyFilters[getSectionId].splice(indexOfCurrentOption, 1);
     }
-  }, [filters]);
 
   useEffect(() => {
     if (filters !== null && sort !== null)
@@ -128,23 +135,27 @@ function ShopListing() {
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
       <ProductFilter filters={filters} handleFilter={handleFilter} />
       <div className="bg-background rounded-lg w-full shadow-sm">
+        {/* Header */}
         <div className="p-4 border-b flex items-center justify-between">
           <h2 className="text-2xl font-bold">All Products</h2>
-          <div className="flex items-center gap-3 ">
+
+          <div className="flex items-center gap-3">
             <span className="text-muted-foreground text-[20px]">
-              {productList?.length}
+              {productList?.length || 0}
             </span>
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="flex items-center  gap-1"
+                  className="flex items-center gap-1"
                 >
                   <ArrowUpDownIcon className="h-4 w-4" />
                   <span className="text-[20px]">Sort by</span>
                 </Button>
               </DropdownMenuTrigger>
+
               <DropdownMenuContent align="end" className="w-[200px]">
                 <DropdownMenuRadioGroup value={sort} onValueChange={handleSort}>
                   {sortOptions.map((sortItem) => (
@@ -160,6 +171,8 @@ function ShopListing() {
             </DropdownMenu>
           </div>
         </div>
+
+        {/* Product Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
           {productList && productList.length > 0 ? (
             productList.map((productItem) => (
