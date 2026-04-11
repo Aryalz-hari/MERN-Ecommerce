@@ -4,16 +4,13 @@ import axios from "axios";
 const initialState = {
   isLoading: false,
   addressList: [],
-};   
+};
 
-const url = "http://localhost:5000";
+const url = import.meta.env.VITE_API_URL || "http://143.244.128.203:8000";
 export const addNewAddress = createAsyncThunk(
   "/addresses/addNewAddress",
   async (formData) => {
-    const response = await axios.post(url+
-      "/api/shop/address/add",
-      formData
-    );
+    const response = await axios.post(url + "/api/shop/address/add", formData);
 
     return response.data;
   }
@@ -22,9 +19,7 @@ export const addNewAddress = createAsyncThunk(
 export const fetchAllAddresses = createAsyncThunk(
   "/addresses/fetchAllAddresses",
   async (userId) => {
-    const response = await axios.get(
-      url+`/api/shop/address/get/${userId}`
-    );
+    const response = await axios.get(url + `/api/shop/address/get/${userId}`);
 
     return response.data;
   }
@@ -34,7 +29,7 @@ export const editaAddress = createAsyncThunk(
   "/addresses/editaAddress",
   async ({ userId, addressId, formData }) => {
     const response = await axios.put(
-      url+`/api/shop/address/update/${userId}/${addressId}`,
+      url + `/api/shop/address/update/${userId}/${addressId}`,
       formData
     );
 
@@ -46,7 +41,7 @@ export const deleteAddress = createAsyncThunk(
   "/addresses/deleteAddress",
   async ({ userId, addressId }) => {
     const response = await axios.delete(
-      url+`/api/shop/address/delete/${userId}/${addressId}`
+      url + `/api/shop/address/delete/${userId}/${addressId}`
     );
 
     return response.data;

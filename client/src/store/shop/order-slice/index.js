@@ -8,12 +8,12 @@ const initialState = {
   orderList: [],
   orderDetails: null,
 };
-const url = "http://localhost:5000";
+const url = import.meta.env.VITE_API_URL || "http://143.244.128.203:8000";
 export const createNewOrder = createAsyncThunk(
   "/order/createNewOrder",
   async (orderData) => {
     const response = await axios.post(
-      url+"/api/shop/order/create",
+      url + "/api/shop/order/create",
       orderData
     );
 
@@ -23,14 +23,11 @@ export const createNewOrder = createAsyncThunk(
 
 export const capturePayment = createAsyncThunk(
   "/order/capturePayment",
-  async ({ paymentId,  orderId }) => {
-    const response = await axios.post(
-      url+"/api/shop/order/capture",
-      {
-        paymentId,
-        orderId,
-      }
-    );
+  async ({ paymentId, orderId }) => {
+    const response = await axios.post(url + "/api/shop/order/capture", {
+      paymentId,
+      orderId,
+    });
 
     return response.data;
   }
@@ -39,9 +36,7 @@ export const capturePayment = createAsyncThunk(
 export const getAllOrdersByUserId = createAsyncThunk(
   "/order/getAllOrdersByUserId",
   async (userId) => {
-    const response = await axios.get(
-      url+`/api/shop/order/list/${userId}`
-    );
+    const response = await axios.get(url + `/api/shop/order/list/${userId}`);
 
     return response.data;
   }
@@ -50,9 +45,7 @@ export const getAllOrdersByUserId = createAsyncThunk(
 export const getOrderDetails = createAsyncThunk(
   "/order/getOrderDetails",
   async (id) => {
-    const response = await axios.get(
-      url+`/api/shop/order/details/${id}`
-    );
+    const response = await axios.get(url + `/api/shop/order/details/${id}`);
 
     return response.data;
   }

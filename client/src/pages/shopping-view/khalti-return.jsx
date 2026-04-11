@@ -2,14 +2,14 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { capturePayment } from "@/store/shop/order-slice";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function KhaltiReturnPage() {
   const dispatch = useDispatch();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const pidx = params.get("pidx"); // Khalti payment ID
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (pidx) {
       const orderId = JSON.parse(sessionStorage.getItem("currentOrderId"));
@@ -17,7 +17,9 @@ function KhaltiReturnPage() {
       dispatch(capturePayment({ paymentId: pidx, orderId })).then((data) => {
         if (data?.payload?.success) {
           sessionStorage.removeItem("currentOrderId");
-          window.location.href = "/shop/payment-success";
+          navigate("/shop/payment-success", {
+            state: { fromPaymentGate: true },
+          });
         } else {
           window.location.href = "/shop/payment-failure";
         }
