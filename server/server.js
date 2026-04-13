@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors= require('cors');
@@ -13,7 +15,7 @@ const shopAddressRouter = require("./routes/shop/address-routes");
 const shopOrderRouter=require('./routes/shop/order-routes')
 mongoose
   .connect(
-    "mongodb+srv://aryalhari059:hari%402060@cluster0.edn2tbq.mongodb.net/?retryWrites=true&w=majority"
+    process.env.MONGODB_URL
   )
 
   .then(() => console.log("MongoDB connected"))
@@ -24,7 +26,7 @@ mongoose
   const PORT = process.env.PORT || 5000;
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: [
       "Content-Type",

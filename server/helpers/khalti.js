@@ -10,3 +10,6 @@ const khalti = axios.create({
 });
 
 module.exports = khalti;
+
+
+ 
