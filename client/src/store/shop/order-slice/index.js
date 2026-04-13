@@ -8,54 +8,47 @@ const initialState = {
   orderList: [],
   orderDetails: null,
 };
-const url = "http://localhost:5000";
+const url = `${import.meta.env.VITE_API_URL}`;
 export const createNewOrder = createAsyncThunk(
   "/order/createNewOrder",
   async (orderData) => {
     const response = await axios.post(
-      url+"/api/shop/order/create",
-      orderData
+      url + "/api/shop/order/create",
+      orderData,
     );
 
     return response.data;
-  }
+  },
 );
 
 export const capturePayment = createAsyncThunk(
   "/order/capturePayment",
-  async ({ paymentId,  orderId }) => {
-    const response = await axios.post(
-      url+"/api/shop/order/capture",
-      {
-        paymentId,
-        orderId,
-      }
-    );
+  async ({ paymentId, orderId }) => {
+    const response = await axios.post(url + "/api/shop/order/capture", {
+      paymentId,
+      orderId,
+    });
 
     return response.data;
-  }
+  },
 );
 
 export const getAllOrdersByUserId = createAsyncThunk(
   "/order/getAllOrdersByUserId",
   async (userId) => {
-    const response = await axios.get(
-      url+`/api/shop/order/list/${userId}`
-    );
+    const response = await axios.get(url + `/api/shop/order/list/${userId}`);
 
     return response.data;
-  }
+  },
 );
 
 export const getOrderDetails = createAsyncThunk(
   "/order/getOrderDetails",
   async (id) => {
-    const response = await axios.get(
-      url+`/api/shop/order/details/${id}`
-    );
+    const response = await axios.get(url + `/api/shop/order/details/${id}`);
 
     return response.data;
-  }
+  },
 );
 
 const shoppingOrderSlice = createSlice({
@@ -77,7 +70,7 @@ const shoppingOrderSlice = createSlice({
         state.orderId = action.payload.orderId;
         sessionStorage.setItem(
           "currentOrderId",
-          JSON.stringify(action.payload.orderId)
+          JSON.stringify(action.payload.orderId),
         );
       })
       .addCase(createNewOrder.rejected, (state) => {

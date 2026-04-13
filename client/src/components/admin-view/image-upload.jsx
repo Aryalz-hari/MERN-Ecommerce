@@ -1,10 +1,9 @@
-
-import React, { useEffect, useRef } from 'react'
-import axios from 'axios';
-import { Label } from '../ui/label'
-import { Input } from '../ui/input'
-import { FileIcon, UploadCloudIcon, XIcon } from 'lucide-react';
-import { Button } from '../ui/button';
+import React, { useEffect, useRef } from "react";
+import axios from "axios";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
+import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 
 export default function ProductImageUpload({
@@ -15,7 +14,7 @@ export default function ProductImageUpload({
   imageLoadingState,
   setImageLoadingState,
   currentEditedID,
-  isEditMode
+  isEditMode,
 }) {
   const inputRef = useRef(null);
   function handleImageFileChange(event) {
@@ -42,13 +41,13 @@ export default function ProductImageUpload({
   async function uploadImageToCloudinary() {
     setImageLoadingState(true);
     const data = new FormData();
-   const url = "http://localhost:5000";
+    const url = `${import.meta.env.VITE_API_URL}`;
     data.append("my_file", imageFile);
     const response = await axios.post(
-      url+"/api/admin/products/upload-image",
-      data
+      url + "/api/admin/products/upload-image",
+      data,
     );
-    console.log(response,"response");
+    console.log(response, "response");
     if (response.data?.success) {
       setUploadedImageUrl(response.data.result.url);
       setImageLoadingState(false);

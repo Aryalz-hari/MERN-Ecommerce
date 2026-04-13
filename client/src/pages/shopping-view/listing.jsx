@@ -45,8 +45,6 @@ function ShopListing() {
   const {
     productList,
     productDetails,
-    // OPTIONAL: add this in your slice for better UX
-    // isLoading,
   } = useSelector((state) => state.shopProducts);
 
   /* ✅ Initialize filters ONLY ONCE */
@@ -107,6 +105,12 @@ function ShopListing() {
   }
 
   /* ---------------- Effects ---------------- */
+
+  /* ✅ Force component to read sessionStorage if the route changes while already mounted */
+  useEffect(() => {
+    const latestFilters = JSON.parse(sessionStorage.getItem("filters")) || {};
+    setFilters(latestFilters);
+  }, [location.search]);
 
   /* ✅ SINGLE SOURCE OF TRUTH FOR FETCH */
   useEffect(() => {
