@@ -118,3 +118,18 @@
     @apply bg-background text-foreground;
   }
 }
+@keyframes borderAnimation {
+  0% {
+    border-color: #c5b822;
+  }
+  50% {
+    border-color: #a855f7;
+  }
+  100% {
+    border-color: #22c55e;
+  }
+}
+
+.animate-border {
+  animation: borderAnimation 3s linear infinite;
+}

@@ -2,7 +2,7 @@ import React from 'react'
 
 const AdminOrders = () => {
   return (
-    <div>AdminOrders</div>
+    <div className='flex flex-col items-center font-bold text-[20px]'>AdminOrders</div>
   )
 }
 
