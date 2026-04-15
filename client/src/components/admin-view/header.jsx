@@ -2,17 +2,24 @@ import React from 'react'
 import { Button } from '../ui/button';
 import { LogOut, AlignJustify } from "lucide-react";
 import { useDispatch } from 'react-redux';
-import { logoutUser } from '@/store/auth-slice';
+import { logoutUser, resetTokenAndCredentials } from '@/store/auth-slice';
 import { toast } from 'sonner';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const AdminHeader = ({setOpen}) => {
   const dispatch= useDispatch();
+  const navigate = useNavigate();
 
-  function handleLogout(){
-    dispatch(logoutUser())
-    toast('Logged out user');
-  }
-
+  // function handleLogout(){
+  //   dispatch(logoutUser())
+  //   toast('Logged out user');
+  // }
+function handleLogout() {
+  dispatch(resetTokenAndCredentials());
+  sessionStorage.clear();
+  navigate('/auth/login')
+  toast("Logged out user");
+}
   return (
     <header className="flex items-center justify-between px-4 py-3 bg-background border-b">
       <Button onClick={()=> setOpen(true)} className="lg:hidden sm:block">
