@@ -65,16 +65,27 @@ const loginUser = async(req,res)=>{
       email:checkUser.email,
       userName:checkUser.userName,
     }, 'CLIENT_SECRET_KEY', {expiresIn:'60m'});
-     return res.cookie("token", token, { httpOnly: true, secure: true }).json({
-       success: true,
-       message: "Logged in successfully",
-       user: {
+    //  return res.cookie("token", token, { httpOnly: true, secure: true }).json({
+    //    success: true,
+    //    message: "Logged in successfully",
+    //    user: {
+    //      id: checkUser._id,
+    //      role: checkUser.role,
+    //      email: checkUser.email,
+    //      userName: checkUser.userName,
+    //    },
+    //  });
+    return res.status(200).json({
+      success:true,
+      message:"Logged In Successfully",
+      token, 
+      user: {
          id: checkUser._id,
          role: checkUser.role,
          email: checkUser.email,
          userName: checkUser.userName,
        },
-     });
+    })
   } catch (e) {
     console.error("Error in loginUser:", e.message);
     res.status(500).json({
@@ -84,23 +95,42 @@ const loginUser = async(req,res)=>{
   }
 
 }
-const authMiddleware = async(req,res,next)=>{
-  const token= req.cookies.token;
-  if(!token) return res.status(401).json({
-    success: false,
-    message:'Unauthorized user'
-  })
-  try{
-    const decoded=  await jwt.verify(token, 'CLIENT_SECRET_KEY');
-    req.user= decoded;
-    next()
-  }catch(e){
+// const authMiddleware = async(req,res,next)=>{
+//   const token= req.cookies.token;
+//   if(!token) return res.status(401).json({
+//     success: false,
+//     message:'Unauthorized user'
+//   })
+//   try{
+//     const decoded=  await jwt.verify(token, 'CLIENT_SECRET_KEY');
+//     req.user= decoded;
+//     next()
+//   }catch(e){
+//     res.status(401).json({
+//       success:false,
+//       message:'Unauthorized user'
+//     })
+//   }
+// } 
+const authMiddleware = async (req, res, next) => {
+  const authHeader= req.headers['authorization'];
+  const token= authHeader&& authHeader.split(' ')[1];
+  if (!token)
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized user",
+    });
+  try {
+    const decoded = await jwt.verify(token, "CLIENT_SECRET_KEY");
+    req.user = decoded;
+    next();
+  } catch (e) {
     res.status(401).json({
-      success:false,
-      message:'Unauthorized user'
-    })
+      success: false,
+      message: "Unauthorized user",
+    });
   }
-} 
+}; 
 
 const logoutUser=(req,res)=>{
   res.clearCookie('token').json({
